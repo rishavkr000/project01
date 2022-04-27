@@ -18,8 +18,6 @@ const authorSchema = new mongoose.Schema(
       trim: true,
     },
     email: {
-      required: true,
-      email: {
         type: String,
         trim: true,
         lowercase: true,
@@ -41,8 +39,7 @@ const authorSchema = new mongoose.Schema(
         maxlength: 12,
       },
     },
-  },
-  { timestamps: true }
-);
+
+  { timestamps: true });
 
 module.exports = mongoose.model("Author", authorSchema);
