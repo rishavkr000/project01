@@ -1,7 +1,5 @@
-
 const authorModel=require('../model/authorModel')
 const blogsModel=require('../model/blogsModel')
-const mongodb = require("mongodb");
 
 
 let getActiveBlogs=async function(req,res){
@@ -39,9 +37,8 @@ let getSelectiveBlogs=async function(req,res){
 
 module.exports.getActiveBlogs=getActiveBlogs
 module.exports.getSelectiveBlogs=getSelectiveBlogs
-
-
-
+const blogsModel = require("../models/blogsModel");
+const mongodb = require("mongodb");
 
 // Check if the blogId exists( and is not deleted). If it does, mark it deleted and return an HTTP status 200 without any response body.
 // If the blog document doesn't exist then return an HTTP status of 404 with a body like this
@@ -87,4 +84,3 @@ const delBlogs = async function (req, res) {
 
 module.exports.deletBlog = deletBlog
 module.exports.delBlogs = delBlogs
-
