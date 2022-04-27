@@ -1,6 +1,5 @@
-const authorModel=require('../model/authorModel')
+// const authorModel=require('../model/authorModel')
 const blogsModel=require('../model/blogsModel')
-const mongodb = require("mongodb");
 
 
 let getActiveBlogs=async function(req,res){
@@ -15,9 +14,9 @@ let getActiveBlogs=async function(req,res){
         data:blogs})
     } 
     catch(err){ res.status(500).send({status:false,msg:err.message})
+}
+}
 
-}
-}
 let getSelectiveBlogs=async function(req,res){
     try{
         let data=req.query
@@ -86,3 +85,4 @@ const delBlogs = async function (req, res) {
 
 module.exports.deletBlog = deletBlog
 module.exports.delBlogs = delBlogs
+

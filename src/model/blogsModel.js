@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
+const moment = require("moment");
 
 const blogSchema = new mongoose.Schema(
   {
@@ -14,31 +15,31 @@ const blogSchema = new mongoose.Schema(
       trim: true,
     },
     authorId: {
-      type: objectId,
+      type: ObjectId,
       ref: "Author",
       required: true,
     },
-    tags: [{ type: string }],
+    tags: [{ type: String }],
     category: {
       type: String,
       required: true,
       trim: true,
     }, ////'examples: [technology, entertainment, life style, food, fashion],
-    subcategory: [{ type: string }], //examples[technology-[web development, mobile development, AI, ML etc]] }
+    subcategory: [{ type: String }], //examples[technology-[web development, mobile development, AI, ML etc]] }
     deletedAt: {
-      type: Date,
-      default: Date.now(),
+      type: Boolean,
+      default: false,
     },
     isDeleted: {
-      type: boolean,
+      type: Boolean,
       default: false,
     },
     publishedAt: {
-      type: Date,
-      default: Date.now(),
+      type: Boolean,
+      default: false,
     },
     isPublished: {
-      type: boolean,
+      type: Boolean,
       default: false,
     },
   },

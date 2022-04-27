@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const allController = require("../controller/allController");
+const authorController = require("../controller/authorController");
+const blogsController = require("../controller/blogsController")
+const allController = require("../controller/allController")
 
-router.get("/test-me", function (req, res) {
-  res.send("My first ever api!");
-});
+ router.post("/createAuthor", authorController.createAuthor)
+ router.post("/createBlog", blogsController.blogs)
 
-// router.get("/cowin/states", CowinController.getStates)
-// router.get("/cowin/districtsInState/:stateId", CowinController.getDistricts)
-// router.get("/cowin/getByPin", CowinController.getByPin)
+router.get("/blogs", allController.getActiveBlogs)
+router.get("/selectblogs", allController.getSelectiveBlogs)
 
-// router.post("/cowin/getOtp", CowinController.getOtp)
+
 
 module.exports = router;
