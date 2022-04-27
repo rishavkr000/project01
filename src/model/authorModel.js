@@ -17,9 +17,7 @@ const authorSchema = new mongoose.Schema(
       enum: ["Mr", "Mrs", "Miss"],
       trim: true,
     },
-    email: {
-      required: true,
-      email: {
+     email: {
         type: String,
         trim: true,
         lowercase: true,
@@ -41,7 +39,7 @@ const authorSchema = new mongoose.Schema(
         maxlength: 12,
       },
     },
-  },
+  
   { timestamps: true }
 );
 
