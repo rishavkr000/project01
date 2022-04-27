@@ -1,5 +1,47 @@
-const blogsModel = require("../models/blogsModel");
+
+const authorModel=require('../model/authorModel')
+const blogsModel=require('../model/blogsModel')
 const mongodb = require("mongodb");
+
+
+let getActiveBlogs=async function(req,res){
+    try{
+    let blogs=await blogsModel.find({isDeleted:false}&&{isPublihed:true});
+    if (!blogs)
+    {res.status(404).send({status:false,
+        msg:"No such blog eists"
+    })
+}
+    res.status(200).send({status:true,
+        data:blogs})
+    } 
+    catch(err){ res.status(500).send({status:false,msg:err.message})
+
+}
+}
+let getSelectiveBlogs=async function(req,res){
+    try{
+        let data=req.query
+    let blogs=await blogsModel.find(data);
+    if (!blogs)
+    {res.status(404).send({status:false,
+        msg:"No such blog eists"
+    })
+}
+    res.status(200).send({status:true,
+        data:blogs})
+    } 
+    catch(err){ res.status(500).send({status:false,msg:err.message})
+
+}
+}
+
+
+module.exports.getActiveBlogs=getActiveBlogs
+module.exports.getSelectiveBlogs=getSelectiveBlogs
+
+
+
 
 // Check if the blogId exists( and is not deleted). If it does, mark it deleted and return an HTTP status 200 without any response body.
 // If the blog document doesn't exist then return an HTTP status of 404 with a body like this
@@ -45,3 +87,4 @@ const delBlogs = async function (req, res) {
 
 module.exports.deletBlog = deletBlog
 module.exports.delBlogs = delBlogs
+
