@@ -43,7 +43,7 @@ let getSelectiveBlogs=async function(req,res){
     })
 }
     res.status(200).send({status:true,
-        data:blogs})
+        list:blogs})
     } 
     catch(err){ res.status(500).send({status:false,msg:err.message})
 
