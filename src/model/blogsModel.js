@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
-const moment = require("moment");
+
 
 const blogSchema = new mongoose.Schema(
   {
@@ -27,16 +27,14 @@ const blogSchema = new mongoose.Schema(
     }, ////'examples: [technology, entertainment, life style, food, fashion],
     subcategory: [{ type: String }], //examples[technology-[web development, mobile development, AI, ML etc]] }
     deletedAt: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     isDeleted: {
-      type: Boolean,
+      type: String,
       default: false,
     },
     publishedAt: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     isPublished: {
       type: Boolean,
@@ -45,4 +43,4 @@ const blogSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-module.exports = mongoose.model("Blog", blogSchema);
+module.exports = mongoose.model("Blog", blogSchema); //blogs
