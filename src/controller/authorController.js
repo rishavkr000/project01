@@ -2,6 +2,9 @@ const authorModel=require('../model/authorModel')
 var validator = require('validator');
 
 
+//=========== Create Authors ====================//
+
+
 //------------validation function-----------//
 let isValid= (value)=>{
   if (typeof value === 'undefined' ||  value === null) return false
@@ -11,11 +14,9 @@ let isValid= (value)=>{
 
 
 
-
-
-
 const createAuthor = async (req,res)=>{
-  try{ let data = req.body;
+  try{ 
+    let data = req.body;
     
  if (Object.keys(data).length == 0 ){
  return res.status(401).send({status:false ,msg:"BAD REQUEST,Please provide Author details "});
@@ -42,7 +43,7 @@ if (!validator.isEmail(data.email)){
 const usedEmail = await authorModel.findOne({email:data.email})
 
 if (usedEmail){
-  return res.ststus(400).send({status:false ,message: `${data.email} this email is already registered`})
+  return res.status(400).send({status:false ,message: `${data.email} this email is already registered`})
 }
 let savedData = await authorModel.create(data)
    res.status(201).send({status:true , msg:savedData});
@@ -54,3 +55,5 @@ let savedData = await authorModel.create(data)
   }
 }
 module.exports.createAuthor=createAuthor
+
+
