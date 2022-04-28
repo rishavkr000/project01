@@ -100,23 +100,26 @@ let getSelectiveBlogs = async function (req, res) {
 };
 
 
-
-  
-
 //=========== Delete Blogs By Id ====================//
 
 const deletBlog = async function (req, res) {
-  let blogId = req.params.blogId;
-  let blog = await blogsModel.findById(blogId);
-  if (!blog) {
-    return res.status(404).send({ status: false, msg: "blogId not found" });
+    try{
+    let blogId = req.params.blogId;
+    let blog = await blogsModel.findById(blogId);
+    if (!blog) {
+        return res.status(404).send({ status: false, msg: "blogId not found" });
+    }
+    let deletedBlog = await blogsModel.updateMany(
+        { _id: blogId },
+        { isDeleted: true, deletedAt: new Date().toLocaleString() },
+        { new: true }
+    );
+    res.status(200).send({ data: deletedBlog, status: true });
+}
+catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
   }
-  let deletedBlog = await blogsModel.updateMany(
-    { _id: blogId },
-    { isDeleted: true, deletedAt: new Date().toLocaleString() },
-    { new: true }
-  );
-  res.status(200).send({ data: deletedBlog, status: true });
+
 };
 
 //=========== Delete Blogs By Query ====================//

@@ -19,7 +19,7 @@ const createAuthor = async (req,res)=>{
     let data = req.body;
     
  if (Object.keys(data).length == 0 ){
- return res.status(401).send({status:false ,msg:"BAD REQUEST,Please provide Author details "});
+ return res.status(400).send({status:false ,msg:"BAD REQUEST,Please provide Author details "});
 }
 if (!isValid(data.fname)){
   return res.status(400).send({status:false ,msg:"First Name is Required"});
