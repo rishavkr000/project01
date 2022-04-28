@@ -55,7 +55,7 @@ const blogs = async (req, res) => {
 const updateBlog = async (req, res) => {
   try {
     let blogId = req.params.blogId;
-    let data = await blogsModel.find({$in: [{ _id: blogId, isDeleted: false}]});
+    let data = await blogsModel.find({ $in: [{ _id: blogId, isDeleted: false }] });
     console.log(data);
     if (!Object.keys(data).length) {
       return res.status(400).send({ status: false, msg: "Data is incorrect" });
@@ -85,23 +85,40 @@ const updateBlog = async (req, res) => {
 //=========== Get Blogs ====================//
 
 let getSelectiveBlogs = async function (req, res) {
-  try { 
-
+  try {
     const data = req.query;
-    let blogs = await blogsModel.find({$and: [{isDeleted: false}, {isPublished: true} ]});
-    console.log(blogs)
-    if (blogs.length==0) {
-      res.status(404).send({ status: false, msg: "No such blog eists" });
+    if (!Object.keys(data).length) {
+
+      let blogs = await blogsModel.find({ $and: [{ isDeleted: false }, { isPublished: true }] });
+      console.log(blogs)
+
+
+      if (!Object.keys(blogs).length) {
+        return res.status(404).send({ status: false, msg: "No such blog eists" });
+      }
+
+      return res.status(200).send({ status: true, data: blogs })
     }
-    res.status(200).send({ status: true, data: blogs });
-  } catch (err) {
-    res.status(500).send({ status: false, msg: err.message });
+
+    else {
+
+      let blogs = await blogsModel.find({ $and: [{ isDeleted: false }, { isPublished: true }, data] });
+      console.log(blogs)
+
+      if (!Object.keys(blogs).length) {
+        return res.status(404).send({ status: false, msg: "No such blog eists" });
+      }
+      return res.status(200).send({ status: true, list: blogs });
+    }
   }
-};
+
+catch(err){
+  return res.status(500).send({status:false,msg:err.message})
+}
+}
 
 
 
-  
 
 //=========== Delete Blogs By Id ====================//
 
