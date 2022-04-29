@@ -89,32 +89,32 @@ let getSelectiveBlogs = async function (req, res) {
     const data = req.query;
     if (!Object.keys(data).length) {
 
-      let blogs = await blogsModel.find({ $and: [{ isDeleted: false }, { isPublished: true }] });
-      console.log(blogs)
+      let blogs = await blogsModel.find({ $and: [{ isDeleted: false }, { isPublished: true}] });
 
 
       if (!Object.keys(blogs).length) {
-        return res.status(404).send({ status: false, msg: "No such blog eists" });
+        return res.status(404).send({ status: false, msg: "u.No such blog eists" });
       }
-
+    
       return res.status(200).send({ status: true, data: blogs })
     }
 
     else {
 
       let blogs = await blogsModel.find({ $and: [{ isDeleted: false }, { isPublished: true }, data] });
-      console.log(blogs)
 
       if (!Object.keys(blogs).length) {
-        return res.status(404).send({ status: false, msg: "No such blog eists" });
+
+        return res.status(404).send({ status: false, msg: "2.No such blog eists" });
       }
+      else if (!document.inludes(data)) { return res.status(404).send({ status: false, msg: "3.No such blog eists" }) }
       return res.status(200).send({ status: true, list: blogs });
     }
   }
 
-catch(err){
-  return res.status(500).send({status:false,msg:err.message})
-}
+  catch (err) {
+    return res.status(500).send({ status: false, msg: err.message })
+  }
 }
 
 
