@@ -32,7 +32,6 @@ const authorSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      // match: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
       minlength: 5,
       maxlength: 12,
     },
