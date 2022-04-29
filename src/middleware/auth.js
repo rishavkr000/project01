@@ -13,7 +13,7 @@ const authCheck = async (req, res, next) => {
             return res.status(400).send({status: false, msg: "validation failed"})
         }
         // req.body.tokenId= validToken._id
-        // if( newUserId!==validToken.){
+        // if( newUserId!==validToken.userId){
         //     return res.status(403).send({status: false, msg: "Unable to verify User"})
         // }      
         next()

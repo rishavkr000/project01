@@ -8,13 +8,11 @@ const jwt = require('jsonwebtoken');
 
 
 //------------validation function-----------//
-let isValid= (value)=>{
+let isValid= (value) => {
   if (typeof value === 'undefined' ||  value === null) return false
   if(typeof value === 'string' && value.trim().length ===0) return false
   return true;
 }
-
-
 
 const createAuthor = async (req,res)=>{
   try{ 
@@ -58,9 +56,13 @@ catch(error){
 }
 
 
+//================= Login ====================//
+
+
 const login = async(req,res)=>{
     try{
-        let data = req.body;
+        let 
+         = req.body;
         if(!Object.keys(data).length){
             return res.status(400).send ({status: false,msg:"Invalid Request , Please Provide Login Details"})
         }
@@ -77,7 +79,7 @@ const login = async(req,res)=>{
                   batch: "uranium"
                 },
                 "group-15-blog-project"
-            )  
+            ) 
                 res.header('x-api-key',token);
                 res.status(200).send({data:"Author login successful",token:{token}})
         } 
