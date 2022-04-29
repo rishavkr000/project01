@@ -88,26 +88,6 @@ let getSelectiveBlogs = async function (req, res) {
   try {
     const data = req.query;
     if (!Object.keys(data).length) {
-<<<<<<< HEAD
-
-      let blogs = await blogsModel.find({ $and: [{ isDeleted: false }, { isPublished: true}] });
-
-
-      if (!Object.keys(blogs).length) {
-        return res.status(404).send({ status: false, msg: "u.No such blog eists" });
-      }
-    
-      return res.status(200).send({ status: true, data: blogs })
-    }
-
-    else {
-
-      let blogs = await blogsModel.find({ $and: [{ isDeleted: false }, { isPublished: true }, data] });
-
-      if (!Object.keys(blogs).length) {
-
-        return res.status(404).send({ status: false, msg: "2.No such blog eists" });
-=======
       let blogs = await blogsModel.find({
         $and: [{ isDeleted: false }, { isPublished: true }],
       });
@@ -130,7 +110,6 @@ let getSelectiveBlogs = async function (req, res) {
         return res
           .status(404)
           .send({ status: false, msg: "1.No such blog eists" });
->>>>>>> 81f67da836374ba640e50e9ff0cd62b38727a1e3
       }
       else if (!document.inludes(data)) { return res.status(404).send({ status: false, msg: "3.No such blog eists" }) }
       return res.status(200).send({ status: true, list: blogs });
@@ -138,18 +117,7 @@ let getSelectiveBlogs = async function (req, res) {
   } catch (err) {
     return res.status(500).send({ status: false, msg: err.message });
   }
-<<<<<<< HEAD
-
-  catch (err) {
-    return res.status(500).send({ status: false, msg: err.message })
-  }
-}
-
-
-
-=======
 };
->>>>>>> 81f67da836374ba640e50e9ff0cd62b38727a1e3
 
 //=========== Delete Blogs By Id ====================//
 

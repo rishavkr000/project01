@@ -2,20 +2,18 @@ const jwt = require('jsonwebtoken');
 
 const authCheck = async (req, res, next) => {
     try{
-        // let newUserId = req.params.userId
+        let newUserId = req.params.userId
         let token = req.headers['x-auth-token']
         if (!token) token=req.headers['x-Auth-Token']
         if(!token){
             return res.status(401).send({msg: "Token is required"})
         }
-        let validToken = jwt.verify(token, "group-15-blog-project")
-        if(!validToken){
-            return res.status(400).send({status: false, msg: "validation failed"})
+        let decodedToken= jwt.verify(token, "group-15-blog-project")
+        if(!decodedToken){
+            return res.status(401).send({status: false, msg: "Authentication Failed"})
         }
-        // req.body.tokenId= validToken._id
-        // if( newUserId!==validToken.){
-        //     return res.status(403).send({status: false, msg: "Unable to verify User"})
-        // }      
+        if(newUserId!==decodedToken.userId){return res.status(403).send({status: false, msg: "Not Authorized"})}
+            
         next()
     }
     catch(err) {

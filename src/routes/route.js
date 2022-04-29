@@ -8,11 +8,11 @@ const middleWare = require("../middleware/auth")
 
 router.post("/createAuthor", authorController.createAuthor)
 router.post("/loginUser", authorController.login)
-router.post("/createBlog", middleWare.authCheck, blogsController.blogs)
-router.get("/selectblogs", middleWare.authCheck, blogsController.getSelectiveBlogs)
-router.put("/updateBlog/:blogId", middleWare.authCheck, blogsController.updateBlog)
-router.delete("/deleteblog/:blogId", middleWare.authCheck, blogsController.deletBlog)
-router.delete("/delbyquery", middleWare.authCheck, blogsController.delBlogsByQuery)
+router.post("/createBlog/:userId", middleWare.authCheck, blogsController.blogs)
+router.get("/getblogs", middleWare.authCheck, blogsController.getSelectiveBlogs)
+router.put("/updateBlog/:userId/:blogId", middleWare.authCheck, blogsController.updateBlog)
+router.delete("/deleteblog/:userId/:blogId", middleWare.authCheck, blogsController.deletBlog)
+router.delete("/delbyquery/:userId", middleWare.authCheck, blogsController.delBlogsByQuery)
 
 
 
