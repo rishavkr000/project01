@@ -24,8 +24,8 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-    }, ////'examples: [technology, entertainment, life style, food, fashion],
-    subcategory: [{ type: String }], //examples[technology-[web development, mobile development, AI, ML etc]] }
+    },
+    subcategory: [{ type: String }],
     deletedAt: {
       type: String,
     },
