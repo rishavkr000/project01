@@ -47,8 +47,10 @@ const createBlogs = async (req, res) => {
 const updateBlog = async (req, res) => {
   try {
     let blogId = req.params.blogId;
-
-    let data = await blogsModel.find({$in: [{ _id: blogId, isDeleted: false }],});
+    console.log(blogId)
+    let data = await blogsModel.findOne({_id:blogId});
+    if(data.authorId !=  req.headers['login-author'])
+    return res.send({status:false, msg: "Unauthorised user."})
 
     console.log(data);
 
@@ -58,13 +60,13 @@ const updateBlog = async (req, res) => {
 
     let { title, body, tags, subcategory } = req.body;
     
-    let newBlog = await blogsModel.findOneAndUpdate({ data },
+    let newBlog = await blogsModel.findOneAndUpdate({$and: [{_id:data._id} ,{isDeleted: false}]},
       {
-        $addToSet: { subcategory: subcategory, tags: tags },
+        $addToSet: {tags: {$each:tags||[]},subcategory:{$each:subcategory||[]}},
         title: title,
         body: body,
         isPublished: true,
-         publishedAt: new Date().toLocaleString(),
+        publishedAt: new Date().toLocaleString(),
       }, { new: true }).populate("authorId");
 
       return res.status(200).send({ status: true, data: newBlog });
