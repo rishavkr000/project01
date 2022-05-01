@@ -1,5 +1,6 @@
 const blogsModel = require("../model/blogsModel");
 const authorModel = require("../model/authorModel");
+const jwt = require('jsonwebtoken');
 
 //=========== Create Blogs ====================//
 
@@ -34,7 +35,7 @@ const createBlogs = async (req, res) => {
       return res.status(400).send({ status: false, msg: "category is required" });
     }
     let savedBlogData = await blogsModel.create(blogData);
-    return res.status(201).send({ status: true, msg: savedBlogData });
+      return res.status(201).send({ status: true, msg: savedBlogData });
   } 
   catch (err) {
     console.log("This is the error:", err.message);
@@ -47,30 +48,27 @@ const createBlogs = async (req, res) => {
 const updateBlog = async (req, res) => {
   try {
     let blogId = req.params.blogId;
-    console.log(blogId)
-    let data = await blogsModel.findOne({_id:blogId});
-    if(data.authorId !=  req.headers['login-author'])
-    return res.send({status:false, msg: "Unauthorised user."})
-
-    console.log(data);
+      console.log(blogId)
+    let data = await blogsModel.findOne({ _id: blogId });
+      console.log(data);
 
     if (!Object.keys(data).length) {
       return res.status(400).send({ status: false, msg: "Data is incorrect" });
     }
 
     let { title, body, tags, subcategory } = req.body;
-    
-    let newBlog = await blogsModel.findOneAndUpdate({$and: [{_id:data._id} ,{isDeleted: false}]},
+
+    let newBlog = await blogsModel.findOneAndUpdate({ $and: [{ _id: data._id }, { isDeleted: false }] },
       {
-        $addToSet: {tags: {$each:tags||[]},subcategory:{$each:subcategory||[]}},
+        $addToSet: { tags: { $each: tags || [] }, subcategory: { $each: subcategory || [] } },
         title: title,
         body: body,
         isPublished: true,
         publishedAt: new Date().toLocaleString(),
       }, { new: true }).populate("authorId");
 
-      return res.status(200).send({ status: true, data: newBlog });
-  } 
+    return res.status(200).send({ status: true, data: newBlog });
+  }
   catch (err) {
     console.log(err.message);
     res.status(500).send({ error: err.message });
@@ -117,23 +115,24 @@ const deleteBlog = async function (req, res) {
     res.status(200).send({ data: deletedBlog, status: true });
   } 
   catch (err) {
-    res.status(500).send({ status: false, msg: err.message });
+    res.status(500).send({ status: false,
+      msg: err.message });
   }
 };
 
 //=========== Delete Blogs By Query ====================//
 
+
 const delBlogsByQuery = async function (req, res) {
   try {
+    let userId = req.params.userId;
     const data = req.query;
     if (!Object.keys(data).length) {
       return res.status(404).send({ status: false, msg: "Query Params empty" });
     }
-    let document = await blogsModel.find({$and: [data, { isDeleted: false }]});
-    console.log(document)
     
     let deletedBlog = await blogsModel.updateMany(
-      { $and: [data, { isDeleted: false }] },
+      { $and: [data, {authorId: userId}, { isDeleted: false }] },
       { $set: { isDeleted: true, deletedAt: new Date().toLocaleString() } },
       { new: true }
     );

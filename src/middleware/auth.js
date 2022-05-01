@@ -12,7 +12,6 @@ const authCheck = async (req, res, next) => {
         if(!decodedToken){
             return res.status(401).send({status: false, msg: "Authentication Failed"})
         }
-        req.headers['login-author'] = decodedToken.userId
         
         if( newId!==decodedToken.userId){
             return res.status(403).send({status: false, msg: "Not Authorized"})
