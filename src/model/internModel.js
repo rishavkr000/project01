@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId
-const { isValidEmail, isValidMobile } = require("../controller/validator")
+const { isValidEmail, isValidMobile } = require("../utility/validator")
 
 
 const internSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: "Name is required",
-        unique: true
+        trim: true,
+        lowercase:true,
+        required: true
     },
     email: {
         type: String,
@@ -17,7 +18,8 @@ const internSchema = new mongoose.Schema({
             message: "Please enter a valid email",
         },
         required: [true, "Email required"],
-        unique: true
+        unique: true,
+        trim: true
     },
     mobile: {
         type: String,
@@ -26,7 +28,8 @@ const internSchema = new mongoose.Schema({
         validate: {
             validator: isValidMobile,
             message: "Please enter a valid mobile number"
-        }
+        },
+        trim: true
     },
     collegeId: {
         type: ObjectId,

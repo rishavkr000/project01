@@ -22,10 +22,25 @@ let isValidEmail = function (email) {
 }
 
 let isValidMobile = function (number) {
-    let mobileRegex = /^\d{10}$/
-    return mobileRegex.test(number)
+    let mobileRegex = /^\d{10}$/;
+    return mobileRegex.test(number);
+}
+
+let isValidName =function(name){
+    let nameRegex=/^[A-Za-z0-9_().@]{1,}$/;
+    return nameRegex.test(name)
+}
+
+let isValidFullName=function(name){
+let nameRegex=/^[A-Za-z\s]{1,}[A-Za-z\s]{0,}$/;
+return nameRegex.test(name);
+}
+
+const isValidUrl = function (value) {
+    let regexForUrl =
+        /(:?^((https|http|HTTP|HTTPS){1}:\/\/)(([w]{3})[\.]{1})?([a-zA-Z0-9]{1,}[\.])[\w]*((\/){1}([\w@?^=%&amp;~+#-_.]+))*)$/;
+    return regexForUrl.test(value);
 }
 
 
-
-module.exports = { isValidRequestBody, isValid, isValidObjectId, isValidEmail, isValidMobile }
+module.exports = { isValidRequestBody, isValid, isValidObjectId, isValidEmail, isValidMobile, isValidUrl,isValidFullName, isValidName }

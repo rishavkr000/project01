@@ -1,5 +1,5 @@
 const collegeModel = require("../model/collegeModel");
-const { isValidRequestBody, isValid } = require("./validator")
+const { isValidRequestBody, isValid, isValidName } = require("../utility/validator")
 
 const createCollege = async (req, res) => {
     try {
@@ -9,8 +9,11 @@ const createCollege = async (req, res) => {
 
         let { name, fullName, logoLink } = data
 
-        if (!isValid(name)) return res.status(400).send({ status: false, msg: "Name is required" })
-        if (!isValid(fullName)) return res.status(400).send({ status: false, msg: "Full name is required" })
+        if (!isValid(name)) return res.status(400).send({ status: false, msg: "College name is required" })
+        if(!isValidName(name)) return res.status(400).send({ status: false, msg: "College name only contain alphanumeric, special character[() . @] and wihout space" })
+        const isUnique= await collegeModel.findOne({name:name})
+        if(isUnique) return res.status(400).send({ status: false, msg: "College name already exist" })
+        if (!isValid(fullName)) return res.status(400).send({ status: false, msg: "College full name is required" })
         if (!isValid(logoLink)) return res.status(400).send({ status: false, msg: "Logo link is required" })
 
         let collegeData = { name, fullName, logoLink }
