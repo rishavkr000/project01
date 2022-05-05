@@ -23,7 +23,7 @@ const internSchema = new mongoose.Schema({
     },
     mobile : {
         type : String,
-        required : true,
+        required : "Mobile number is required",
         unique : true,
         validate : {
             validator : function (v) {

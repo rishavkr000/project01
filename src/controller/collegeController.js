@@ -7,7 +7,7 @@ const createCollege = async (req, res) => {
         const data = req.body;
         if(!isValidRequestBody(data))
             return res.status(400).send({status : false, msg: "Data not found"})
-        console.log(data)
+        
         let {name, fullName, logoLink} = data
 
         if(!isValid(name)) return res.status(400).send({status : false, msg: "Name is required"})

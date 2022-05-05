@@ -1,8 +1,8 @@
 const ObjectId= require("mongoose").Types.ObjectId
 
 let isValidRequestBody = function(body) {
-if(Object.keys(body).length === 0) return false;
-return true;
+    if(Object.keys(body).length === 0) return false;
+    return true;
 }
 
 let isValid=function(value){

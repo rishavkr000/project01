@@ -15,7 +15,7 @@ let collegeSchema = mongoose.Schema(
         },
         logoLink: {
             type: String,
-            required: "College logo is required",
+            required: "College logo link is required",
             trim: true
         }, isDeleted: {
             type: Boolean,
@@ -25,4 +25,4 @@ let collegeSchema = mongoose.Schema(
     { timestamps: true }
 )
 
-module.exports=mongoose.model('College', collegeSchema)
+module.exports=mongoose.model('College', collegeSchema) //colleges
