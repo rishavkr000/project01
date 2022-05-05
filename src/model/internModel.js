@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const ObjectId= mongoose.Schema.Types.ObjectId
-// const {isValidEmail, isValidMobile} = require("../controller/validator")
-
+var {isValidEmail, isValidMobile} = require("../controller/validator")
 
 const internSchema = new mongoose.Schema({
     name : {

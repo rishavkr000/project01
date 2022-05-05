@@ -41,7 +41,7 @@ let createIntern= async function(req,res){
 
 let getCollegeDetails = async (req, res) => {
     try {
-        const collegeName = req.query.name;
+        const collegeName = req.query.CollegeName;
         if (!collegeName) return res.status(400).send({ status: false, msg: 'Empty query' })
 
         const college = await collegeModel.findOne({ name: collegeName, isDeleted: false })
