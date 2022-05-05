@@ -11,7 +11,7 @@ let collegeSchema = mongoose.Schema(
         fullName: {
             type: String,
             required: "College full name is required",
-            trim:true
+            trim: true
         },
         logoLink: {
             type: String,
@@ -25,4 +25,4 @@ let collegeSchema = mongoose.Schema(
     { timestamps: true }
 )
 
-module.exports=mongoose.model('College', collegeSchema)
+module.exports = mongoose.model('College', collegeSchema)
