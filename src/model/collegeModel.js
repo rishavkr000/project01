@@ -16,7 +16,7 @@ let collegeSchema = new mongoose.Schema(
         },
         logoLink: {
             type: String,
-            required: "College logo is required",
+            required: "College logo link is required",
             trim: true
         }, isDeleted: {
             type: Boolean,
