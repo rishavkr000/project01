@@ -30,11 +30,9 @@ let createIntern = async function (req, res) {
 
         let collegeData = await collegeModel.findOne({ name: collegeName });
         
-        if (!collegeData) return res.status(400).send({ status: false, msg: "College data not found!" })
+        if (!collegeData) return res.status(404).send({ status: false, msg: "College data not found!" })
         
         let { _id } = collegeData;
-        
-        if (!isValidObjectId(_id)) return res.status(400).send({ status: false, msg: `${_id} is not a valid object id` })
         
         let collegeId = _id;
 
@@ -63,9 +61,9 @@ const getIntern = async function (req, res) {
 
         if (!isValidObjectId(_id)) return res.status(400).send({ status: false, msg: "College id is not a valid object id" })
 
-        const getIntern = await internModel.find({ collegeId: _id }).select({ _id: 1, name: 1, email: 1, mobile: 1 })
+        const getIntern = await internModel.find({ collegeId: _id, isDeleted:false }).select({ _id: 1, name: 1, email: 1, mobile: 1 })
         
-        if (Array.isArray(getIntern) && getIntern.length === 0) return res.status(400).send({ status: false, msg: "Intern data not found!" })
+        if (Array.isArray(getIntern) && getIntern.length === 0) return res.status(404).send({ status: false, msg: "Intern data not found!" })
 
         return res.status(200).send({ status: true, data: { name: name, fullName: fullName, logoLink: logoLink, interests: getIntern } })
     }
