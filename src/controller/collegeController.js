@@ -19,7 +19,7 @@ const createCollege = async (req, res) => {
         let collegeData = { name, fullName, logoLink }
         let college = await collegeModel.create(collegeData)
 
-        return res.status(201).send({ status: true, data: college })
+        return res.status(201).send({ status: true,msg:"College register sucessfully", data: college })
     }
     catch (err) {
         return res.status(500).send({ status: false, msg: err.message })

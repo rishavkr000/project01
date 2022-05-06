@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-let collegeSchema = mongoose.Schema(
+let collegeSchema = new mongoose.Schema(
     {
         name: {
             type: String,
