@@ -38,15 +38,14 @@ let createIntern = async function (req, res) {
 const getIntern = async function (req, res) {
     try {
         let collegName = req.query.collegeName;
-        if (isValid(!collegName)) return res.status(400).send({ status: false, msg: "collegeName is required in query params" })
+
+        if (!isValid(collegName)) return res.status(400).send({ status: false, msg: "collegeName is required in query params" })
 
         const getCollege = await collegeModel.find({ name: collegName })
         if (Array.isArray(getCollege) && getCollege.length === 0) return res.status(400).send({ status: false, msg: "College not found!" })
-
         let [{ _id, name, fullName, logoLink }] = getCollege;
-        if (isValidObjectId(_id)) return res.status(400).send({ status: false, msg: "College id is not a valid object id" })
-
-        const getIntern = await internModel.find({ collegId: _id }).select({ _id: 1, name: 1, email: 1, mobile: 1 })
+        if (!isValidObjectId(_id)) return res.status(400).send({ status: false, msg: "College id is not a valid object id" })
+        const getIntern = await internModel.find({ collegeId: _id}).select({_id:1,name:1,email:1,mobile:1})
         if (Array.isArray(getIntern) && getIntern.length === 0) return res.status(400).send({ status: false, msg: "Intern data not found!" })
 
         return res.status(200).send({ data: { name: name, fullName: fullName, logoLink: logoLink, interest: getIntern } })
