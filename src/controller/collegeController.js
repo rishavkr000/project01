@@ -3,8 +3,10 @@ const { isValidRequestBody, isValid, isValidName } = require("../utility/validat
 
 const createCollege = async (req, res) => {
     try {
+        let queryParams = req.query;
         const data = req.body;
-
+        
+        if(isValidRequestBody(queryParams)) return res.status(400).send({ status: false, msg: "Here query is not a valid request!" })
         if (!isValidRequestBody(data)) return res.status(400).send({ status: false, msg: "Data not found" })
 
         let { name, fullName, logoLink } = data

@@ -5,7 +5,10 @@ const { isValidRequestBody, isValid, isValidEmail, isValidMobile, isValidFullNam
 
 let createIntern = async function (req, res) {
     try {
+        let queryParams = req.query;
         let data = req.body;
+        
+        if(isValidRequestBody(queryParams)) return res.status(400).send({ status: false, msg: "Here query is not a valid request!" })
         if (!isValidRequestBody(data)) return res.status(400).send({ status: false, msg: "No user input" })
 
         let { name, email, mobile, collegeName } = data;
@@ -22,7 +25,7 @@ let createIntern = async function (req, res) {
         if (isUniqueMobile) return res.status(400).send({ status: false, message: `This mobile number ${mobile} is already exist` })
         if (!isValid(collegeName)) return res.status(400).send({ status: false, msg: "College Name is required" })
         let collegeData = await collegeModel.findOne({ name: collegeName });
-        if (Object.keys(collegeData).length===0) return res.status(400).send({ status: false, msg: "College data not found!" })
+        if (Object.keys(collegeData).length === 0) return res.status(400).send({ status: false, msg: "College data not found!" })
         let { _id } = collegeData;
         if (!isValidObjectId(_id)) return res.status(400).send({ status: false, msg: `${_id} is not a valid object id` })
         let collegeId = _id;
