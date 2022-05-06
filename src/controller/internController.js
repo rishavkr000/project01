@@ -37,8 +37,8 @@ let createIntern = async function (req, res) {
 
 const getIntern = async function (req, res) {
     try {
-        let collegName = req.query.collegeName;
-
+        let collegName = req.query.collegeName.toLowerCase();
+        
         if (!isValid(collegName)) return res.status(400).send({ status: false, msg: "collegeName is required in query params" })
 
         const getCollege = await collegeModel.find({ name: collegName })
