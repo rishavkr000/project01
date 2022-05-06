@@ -15,7 +15,9 @@ const createCollege = async (req, res) => {
         if(!isValidName(name)) return res.status(400).send({ status: false, msg: "College name only contain alphanumeric, special character[() . @] and wihout space" })
         const isUnique= await collegeModel.findOne({name:name})
         if(isUnique) return res.status(400).send({ status: false, msg: "College name already exist" })
+
         if (!isValid(fullName)) return res.status(400).send({ status: false, msg: "College full name is required" })
+        
         if (!isValid(logoLink)) return res.status(400).send({ status: false, msg: "Logo link is required" })
 
         let collegeData = { name, fullName, logoLink }

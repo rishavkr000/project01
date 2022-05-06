@@ -37,7 +37,7 @@ return nameRegex.test(name);
 }
 
 const isValidUrl = function (value) {
-    let regexForUrl =
+    let regexForUrl = 
         /(:?^((https|http|HTTP|HTTPS){1}:\/\/)(([w]{3})[\.]{1})?([a-zA-Z0-9]{1,}[\.])[\w]*((\/){1}([\w@?^=%&amp;~+#-_.]+))*)$/;
     return regexForUrl.test(value);
 }
