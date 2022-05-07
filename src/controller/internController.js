@@ -59,8 +59,6 @@ const getIntern = async function (req, res) {
         
         let [{ _id, name, fullName, logoLink }] = getCollege;
 
-        if (!isValidObjectId(_id)) return res.status(400).send({ status: false, msg: "College id is not a valid object id" })
-
         const getIntern = await internModel.find({ collegeId: _id, isDeleted:false }).select({ _id: 1, name: 1, email: 1, mobile: 1 })
         
         if (Array.isArray(getIntern) && getIntern.length === 0) return res.status(404).send({ status: false, msg: "Intern data not found!" })
