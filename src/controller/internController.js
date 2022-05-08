@@ -55,7 +55,7 @@ const getIntern = async function (req, res) {
 
         const getCollege = await collegeModel.find({ name: collegName })
 
-        if (Array.isArray(getCollege) && getCollege.length === 0) return res.status(400).send({ status: false, msg: "College not found!" }) //use masking in this line
+        if (Array.isArray(getCollege) && getCollege.length === 0) return res.status(404).send({ status: false, msg: "College not found!" }) //use masking in this line
         
         let [{ _id, name, fullName, logoLink }] = getCollege;
 
