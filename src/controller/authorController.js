@@ -1,6 +1,6 @@
-const authorModel=require('../model/authorModel')
-var validator = require('validator');
-const jwt = require('jsonwebtoken');
+const authorModel=require('../model/authorModel')  //import authorModel
+var validator = require('validator');              // import validator for email validation
+const jwt = require('jsonwebtoken');              // import jsonwebtoken to generate token
 
 //=========== Create Authors ====================//
 
@@ -16,7 +16,7 @@ const createAuthor = async (req,res)=>{
     let data = req.body;
     
     if (Object.keys(data).length == 0 ){
-    return res.status(400).send({status:false ,msg:"BAD REQUEST,Please provide Author details "});
+      return res.status(400).send({status:false ,msg:"BAD REQUEST,Please provide Author details "});
     }
     if (!isValid(data.fname)){
       return res.status(400).send({status:false ,msg:"First Name is Required"});
@@ -37,13 +37,13 @@ const createAuthor = async (req,res)=>{
       return res.status(400).send({status:false ,msg:"Enter a Valid Email"});
     }
 
-    const usedEmail = await authorModel.findOne({email:data.email})
+    const usedEmail = await authorModel.findOne({email:data.email})  //For checking duplicate email id
 
     if (usedEmail){
       return res.status(400).send({status:false ,message: `${data.email} this email is already registered`})
     }
     let savedData = await authorModel.create(data)
-      res.status(201).send({status:true , msg:savedData});
+      return res.status(201).send({status:true , msg:savedData});
   }
   catch(error){
       console.log("This is the error:",error.message );
@@ -55,20 +55,20 @@ const createAuthor = async (req,res)=>{
 //================= Login ====================//
 
 
-const login = async (req,res) => {
+const login = async(req,res)=>{
   try{
       let data = req.body;
       if(!Object.keys(data).length){
             return res.status(400).send ({status: false,msg:"Invalid Request , Please Provide Login Details"})
       }
       if (data.email && data.password){
-        let user = await authorModel.findOne({email:data.email,password:data.password})
-        if(!user){
+        let author = await authorModel.findOne({email:data.email,password:data.password})
+        if(!author){
           return res.status(400).send({status:false,msg:"Invalide email or password"});
         }
         let token = jwt.sign(
             {
-                userId: user._id.toString(),
+                authorId: author._id.toString(),
                 projectName: "Blogging Site Mini Project",
                 batch: "uranium"
             },
@@ -87,12 +87,3 @@ const login = async (req,res) => {
 
 module.exports.createAuthor=createAuthor
 module.exports.login=login;
-
-
-
-
-
-
-
-
-
